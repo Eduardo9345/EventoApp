@@ -50,6 +50,10 @@ public class EventoController {
 		Evento ev = er.findById(codigo);
 		ModelAndView mv = new ModelAndView("evento/detalhesEvento");
 		mv.addObject("evento", ev);
+		
+		Iterable<Convidado> convidados = cr.findByEvento(ev);
+		mv.addObject("convidados", convidados);
+		
 		return mv;
 	}
 	
