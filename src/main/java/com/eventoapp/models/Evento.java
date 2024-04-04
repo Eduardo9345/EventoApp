@@ -1,12 +1,15 @@
 package com.eventoapp.models;
 
 import java.io.Serializable;
+import java.util.List;
 
+import jakarta.annotation.Nullable;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -30,10 +33,19 @@ public class Evento implements Serializable{
 	
 	@Column
 	private String horario;
+
+	@OneToMany
+	private List<Convidado> convidados;
 	
 
 	public long getId() {
 		return id;
+	}
+	public List<Convidado> getConvidados() {
+		return convidados;
+	}
+	public void setConvidados(List<Convidado> convidados) {
+		this.convidados = convidados;
 	}
 	public void setId(long id) {
 		this.id = id;
