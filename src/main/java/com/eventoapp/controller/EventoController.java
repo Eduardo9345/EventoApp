@@ -1,13 +1,16 @@
 package com.eventoapp.controller;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.AbstractBindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.eventoapp.models.Convidado;
 import com.eventoapp.models.Evento;
@@ -58,12 +61,23 @@ public class EventoController {
 	}
 	
 	@PostMapping("/{codigo}")
-	public ModelAndView cadastrarConvidado(@PathVariable long codigo, Convidado convidado) {
-		Evento evento = er.findById(codigo);
-		convidado.setEvento(evento);
-		evento.getConvidados().add(convidado);
-		cr.save(convidado);
-		er.save(evento);
-		return new ModelAndView("redirect:/{codigo}");
+	public ModelAndView cadastrarConvidado(@PathVariable long codigo, @Valid Convidado convidado, AbstractBindingResult result, RedirectAttributes attributes) {
+		
+		//Redirecionar mensagem de erro para a view
+		if(result.hasErrors()) {
+			attributes.addFlashAttribute("mensagem", "Verifique os campos!");
+			return new ModelAndView("redirect:/{codigo}");
+		}
+
+		else {
+			Evento evento = er.findById(codigo);
+			convidado.setEvento(evento);
+			evento.getConvidados().add(convidado);
+			cr.save(convidado);
+			er.save(evento);
+			
+			attributes.addFlashAttribute("mensagem", "Convidado adicionado com sucesso!");
+			return new ModelAndView("redirect:/{codigo}");
+		}
 	}
 }

@@ -25,9 +25,11 @@
 				
 			</div>
 			
+			<th:block th:include="~{mensagemValidacao}"></th:block>
+			
 			<form method="post">
-				Nome: <input type="text" value="" name="nomeConvidado">
-				Rg: <input type="text" value="" name="rg">
+				Nome: <input type="text" name="nomeConvidado">
+				Rg: <input type="text" name="rg">
 				<button class="waves-effect waves-light btn" type="submit" name="action">Adicionar</button>
 			</form>
 		</div>
