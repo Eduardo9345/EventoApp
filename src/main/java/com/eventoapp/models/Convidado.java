@@ -21,7 +21,7 @@ public class Convidado {
 	@NotEmpty
 	@NotBlank
 	private String nomeConvidado;
-	
+
 	@ManyToOne
 	private Evento evento;
 	

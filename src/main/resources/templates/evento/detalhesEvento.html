@@ -5,45 +5,61 @@
       <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
       <!--Import materialize.css-->
       <link type="text/css" rel="stylesheet" href="materialize/css/materialize.min.css"  media="screen,projection"/>
+	  <link type="text/css" rel="stylesheet" href="style/style.css">
 
       <!--Let browser know website is optimized for mobile-->
       <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 		<title>EventoApp</title>
-	</head>
-	<body>
-		<h1>Lista de Eventos</h1>
-		<h3><a class="waves-effect waves-light btn" href="/eventos"><i class="material-icons left">add_circle_outline</i>Lista de Eventos</a></h3>
 		
-		<div th:each="evento : ${evento}" class="container">
+	</head>
+	<header>
+		
+		<nav>
+		    <div class="nav-wrapper">
+		      <a href="#" class="brand-logo">Evento</a>
+		      <ul id="nav-mobile" class="right hide-on-med-and-down">
+		        <li><a class="waves-effect waves-light btn" href="/eventos"><i class="material-icons left">add_circle_outline</i>Lista de Eventos</a></li>
+		      </ul>
+		    </div>
+		 </nav>
+	</header>
+	<body>
+		<div th:each="evento : ${evento}" class="container detalhesEvento">
 			
 			<div class="row">
-				
-				<p>Nome: <span th:text="${evento.nome}"></span></p>
-				<p>Local: <span th:text="${evento.local}"></span></p>
-				<p>Data: <span th:text="${evento.data}"></span></p>
-				<p>Horario: <span th:text="${evento.horario}"></span></p>
+				<h5>Detalhes do evento</h5>
+				<p><h5><span th:text="${evento.nome}" style="text-align: center;"></span></h5></p>
+				<p><strong>Local: </strong> <span th:text="${evento.local}"></span></p>
+				<p><strong>Data: </strong> <span th:text="${evento.data}"></span></p>
+				<p><strong>Horario: </strong><span th:text="${evento.horario}"></span></p>
 				
 			</div>
-			
-			<th:block th:include="~{mensagemValidacao}"></th:block>
-			
-			<form method="post">
-				Nome: <input type="text" name="nomeConvidado">
-				Rg: <input type="text" name="rg">
-				<button class="waves-effect waves-light btn" type="submit" name="action">Adicionar</button>
-			</form>
 		</div>
-		<h5 class="container">Lista de Convidados</h5>
-		<div class="container" th:each="convidado : ${convidados}">
-			<div class="row">
-				<div class="input-field col s6">
-					<p>Nome: <span th:text="${convidado.nomeConvidado}"></span></p>
-				</div>
-				<div class="input-field col s3">
-					<p>Rg: <span th:text="${convidado.rg}"></span></p>
-				</div>
-			</div>
+		
+		<h5 style="text-align: center;">Cadastrar Convidados</h5> 
+		<th:block th:include="~{mensagemValidacao}"></th:block>
+		<div class="container formConvidado">	
+				<form method="post">
+					Nome: <input type="text" name="nomeConvidado">
+					Rg: <input type="text" name="rg">
+					<button class="waves-effect waves-light btn" type="submit" name="action">Adicionar</button>
+				</form>
 		</div>
+		<h5 style="text-align: center;">Convidados</h5>
+		<table class="container tabelaConvidado">
+			<thead>
+				
+				<th>Nome do Convidado</th>
+				<th>Rg</th>
+				
+			</thead>
+			<tbody>
+				<tr th:each="convidado : ${convidados}">
+					<td><span th:text="${convidado.nomeConvidado}"></span></td>
+					<td><span th:text="${convidado.rg}"></span></td>
+				</tr>
+			</tbody>
+		</table>
 		<!--JavaScript at end of body for optimized loading-->
       <script type="text/javascript" src="materialize/js/materialize.min.js"></script>
 	</body>
